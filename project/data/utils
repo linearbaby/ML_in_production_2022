@@ -1,6 +1,7 @@
 import wget
 from pathlib import Path
-
+from omegaconf import DictConfig
+import pandas as pd
 
 def load_file(url: str, file_path: str, override=False):
     path = Path(file_path)
@@ -10,4 +11,12 @@ def load_file(url: str, file_path: str, override=False):
     else:
         pass
 
-def get_dataset(config)
+def get_dataset(config: DictConfig) -> pd.DataFrame:
+    load_file(config.data_url, config.file_location)
+    
+    ''' place for file extensions checking
+        lets assume that extension is csv with particular
+        devide cymbol'''
+
+    df = pd.read_csv(config.file_location)
+    return df
