@@ -1,0 +1,2 @@
+file_location: ${core.root_path}/data/datafiles/dataset.csv
+data_url: https://raw.githubusercontent.com/ArtemPushPop/ML/main/breasts_cancer.csv
