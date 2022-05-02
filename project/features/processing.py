@@ -36,12 +36,12 @@ def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame) -> tuple:
         transformers=[
             (
                 "num",
-                process_numerical_features,
+                process_numerical_features(),
                 dataset.select_dtypes(include=["int64", "float64"]).columns,
             ),
             (
                 "cat",
-                process_categorical_features,
+                process_categorical_features(),
                 dataset.select_dtypes(include=["object"]).columns,
             ),
         ]
