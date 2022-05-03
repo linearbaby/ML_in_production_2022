@@ -1,28 +1,28 @@
 from data.utils import get_dataset
+from models.utils import (get_model, save_metrics, save_model)
 from features.processing import preprocess_pipeline
 import hydra
-import pandas as pd
 from omegaconf import DictConfig, OmegaConf
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-from hydra.utils import get_original_cwd
+from utils.workflow import init_rootpath
 import logging
 
-log = logging.getLogger(__name__)
 
-
-@hydra.main(config_path="configs", config_name="main_conf")
+@hydra.main(config_path="configs", config_name="main_conf_train")
 def main(cfg: OmegaConf):
-    # instantiate root_path for propriate file management
-    log.debug('instantiate root_path for propriate file management')
-    cfg.core.root_path = get_original_cwd()
+    init_rootpath(cfg)
+
+    model = get_model(cfg.model)
+    if model is None:
+        return
 
     ds = get_dataset(config=cfg.data)
     X_train, X_test, y_train, y_test = preprocess_pipeline(cfg.pipeline, ds)
-    model = LogisticRegression()
+
     model.fit(X_train, y_train)
-    print(accuracy_score(model.predict(X_test), y_test))
-    pass
+
+    save_model(model, cfg.model)
+    save_metrics(f"accuracy score of model: {accuracy_score(model.predict(X_test), y_test)}", cfg.model)
 
 if __name__ == "__main__":
     main()

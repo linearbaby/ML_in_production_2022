@@ -5,6 +5,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from omegaconf import DictConfig
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def process_numerical_features() -> Pipeline:
@@ -29,9 +32,13 @@ def process_categorical_features() -> Pipeline:
     return categoric_transformer
 
 
-def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame) -> tuple:
-    target = dataset.to_numpy()[:, -1]
-    dataset = dataset.iloc[:, :-1:]
+def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame, eval=False) -> tuple:
+    if not eval:
+        log.debug('splitting target and dataset')
+        target = dataset.to_numpy()[:, -1]
+        dataset = dataset.iloc[:, :-1:]
+
+    log.debug('creating preprocessor pipeline')
     preprocessor = ColumnTransformer(
         transformers=[
             (
@@ -46,9 +53,17 @@ def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame) -> tuple:
             ),
         ]
     )
-    return train_test_split(
-        preprocessor.fit_transform(dataset),
-        target,
-        test_size=config.test_size,
-        random_state=config.random_state,
-    )
+
+    # check if eval, then there is no target in dataset,
+    # and not need to train test_split
+    if not eval:
+        log.debug('preprocessing dataset, and splitting it for train')
+        return train_test_split(
+            preprocessor.fit_transform(dataset),
+            target,
+            test_size=config.test_size,
+            random_state=config.random_state,
+        )
+    else:
+        log.debug('preprocessing dataset for evaluation')
+        return preprocessor.fit_transform(dataset)

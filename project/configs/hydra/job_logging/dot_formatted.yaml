@@ -1,0 +1,19 @@
+version: 1
+formatters:
+  dot-separated:
+    format: '[%(asctime)s]::[%(name)s]::[%(levelname)s]::%(message)s'
+    datefmt: '%D # %H:%M:%S'
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: dot-separated
+    stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    formatter: dot-separated
+    filename: ${hydra.job.name}.log
+root:
+  level: DEBUG
+  handlers: [file]
+
+disable_existing_loggers: false

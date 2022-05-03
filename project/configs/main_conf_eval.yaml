@@ -1,0 +1,16 @@
+defaults:
+  - _self_
+  - data: breast_cancer_eval
+  - pipeline: default_pipeline
+  - model: logreg
+  - override hydra/job_logging: dot_formatted
+
+hydra:
+  run:
+    dir: ./outputs/eval/${model.model_type}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+core: 
+  random_state: 0
+  path_of_model_pkl: ${core.root_path}/outputs/train/${model.model_type}
+  root_path: ???  # tris variable will be instantiated in runtime with project dir full path
+

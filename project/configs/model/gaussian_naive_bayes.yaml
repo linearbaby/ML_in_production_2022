@@ -1,0 +1,7 @@
+defaults:
+  - general
+
+model_type: GaussianNB
+params: 
+  priors: None
+  var_smoothing: 1e-09

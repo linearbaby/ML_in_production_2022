@@ -1,0 +1,15 @@
+defaults:
+  - _self_
+  - data: breast_cancer_train
+  - pipeline: default_pipeline
+  - model: logreg
+  - override hydra/job_logging: dot_formatted
+
+hydra:
+  run:
+    dir: ./outputs/train/${model.model_type}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
+core: 
+  random_state: 0
+  root_path: ???  # tris variable will be instantiated in runtime with project dir full path
+

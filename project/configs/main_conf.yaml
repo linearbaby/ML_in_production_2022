@@ -1,9 +1,0 @@
-defaults:
-  - _self_
-  - data: breast_cancer
-  - pipeline: default_pipeline
-
-core: 
-  random_state: 0
-  root_path: ???  # tris variable will be instantiated in runtime with project dir full path
-

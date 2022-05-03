@@ -1,0 +1,4 @@
+artifact_path: "artifacts/${model.model_type}.pkl"
+metrics_path: "metrics/${model.model_type}.txt"
+model_pkl_path: ${core.path_of_model_pkl}
+model_results_path: "results.csv"
