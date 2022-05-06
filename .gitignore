@@ -29,7 +29,7 @@ MANIFEST
 
 
 # hydra outputs folder
-project/outputs
+ml_project/outputs
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

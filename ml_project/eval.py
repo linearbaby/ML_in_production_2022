@@ -1,5 +1,6 @@
 import hydra
 from omegaconf import OmegaConf
+
 from models.utils import load_recent_model, save_eval
 from data.utils import get_dataset
 from features.processing import preprocess_pipeline
@@ -15,9 +16,10 @@ def main(cfg: OmegaConf):
         return
 
     ds = get_dataset(cfg.data)
-    X = preprocess_pipeline(cfg.pipeline, ds,  eval=True)
+    X = preprocess_pipeline(cfg.pipeline, ds, eval=True)
 
     save_eval(cfg.model, model.predict(X))
+
 
 if __name__ == "__main__":
     main()
