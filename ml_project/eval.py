@@ -15,8 +15,8 @@ def main(cfg: OmegaConf):
     if model is None:
         return
 
-    ds = get_dataset(cfg.data)
-    X = preprocess_pipeline(cfg.pipeline, ds, eval=True)
+    dataset = get_dataset(cfg.data)
+    X = preprocess_pipeline(cfg.pipeline, dataset, eval=True)
 
     save_eval(cfg.model, model.predict(X))
 

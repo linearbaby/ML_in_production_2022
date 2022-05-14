@@ -34,11 +34,9 @@ def load_file(url: str, file_path: str, override=False):
 def get_dataset(config: DictConfig) -> pd.DataFrame:
     load_file(config.data_url, config.file_location)
 
-    """ place for file extensions checking
-        lets assume that extension is csv with particular
-        devide cymbol"""
+    # possible place for extintions checking
 
-    log.debug(f"reading DataFrame object from {config.file_location}")
+    log.info(f"reading DataFrame object from {config.file_location}")
     df = pd.read_csv(config.file_location)
-    log.debug(f"DataFrame object instantiated")
+    log.info(f"DataFrame object instantiated")
     return df

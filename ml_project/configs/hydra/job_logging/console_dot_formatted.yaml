@@ -13,7 +13,7 @@ handlers:
     formatter: dot-separated
     filename: ${hydra.job.name}.log
 root:
-  level: DEBUG
+  level: INFO
   handlers: [console]
 
 disable_existing_loggers: false

@@ -1,14 +1,16 @@
+from typing import Union
 import logging
 import pickle
 import os
+import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import GaussianNB
 import sklearn
 import pandas as pd
 from omegaconf import DictConfig
 
-
 from utils.workflow import create_subdirs
+
 
 log = logging.getLogger(__name__)
 
@@ -25,9 +27,7 @@ def get_model(model_config: DictConfig) -> sklearn.base.BaseEstimator:
         log.critical("model object was not created")
         model = None
     else:
-        log.debug(
-            f"successfully created model object of class{model_config.model_type}"
-        )
+        log.info(f"successfully created model object of class{model_config.model_type}")
 
     return model
 
@@ -41,7 +41,7 @@ def save_model(model: sklearn.base.BaseEstimator, model_config: DictConfig):
     except:
         log.error("cannot save model to pcl file")
     else:
-        log.debug("successfully saved model to artifact file")
+        log.info("successfully saved model to artifact file")
 
 
 def save_metrics(metrics: str, model_config: DictConfig):
@@ -53,7 +53,7 @@ def save_metrics(metrics: str, model_config: DictConfig):
     except:
         log.error("cannot save metrics")
     else:
-        log.debug("successfully saved metrics")
+        log.info("successfully saved metrics")
 
 
 def load_recent_model(model_config: DictConfig):
@@ -78,15 +78,15 @@ def load_recent_model(model_config: DictConfig):
             + model_config.artifact_path
         )
 
-        log.debug(f"found most recent model in: {model_path}")
+        log.info(f"found most recent model in: {model_path}")
         with open(model_path, "rb") as art_file:
             model = pickle.load(art_file)
 
-    log.debug(f"successfully loaded model")
+    log.info(f"successfully loaded model")
     return model
 
 
-def save_eval(model_config: DictConfig, ds):
+def save_eval(model_config: DictConfig, ds: Union[pd.DataFrame, np.ndarray]):
     dataset = pd.DataFrame(ds)
-    log.debug(f"saving results to results dir")
+    log.info(f"saving results to results dir")
     dataset.to_csv(model_config.model_results_path)

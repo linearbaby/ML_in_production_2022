@@ -7,6 +7,7 @@ from models.utils import get_model, save_metrics, save_model
 from data.utils import get_dataset
 from utils.workflow import init_rootpath
 
+
 @hydra.main(config_path="configs", config_name="main_conf_train")
 def main(cfg: OmegaConf):
     init_rootpath(cfg)
@@ -15,8 +16,8 @@ def main(cfg: OmegaConf):
     if model is None:
         return
 
-    ds = get_dataset(config=cfg.data)
-    X_train, X_test, y_train, y_test = preprocess_pipeline(cfg.pipeline, ds)
+    dataset = get_dataset(config=cfg.data)
+    X_train, X_test, y_train, y_test = preprocess_pipeline(cfg.pipeline, dataset)
 
     model.fit(X_train, y_train)
 

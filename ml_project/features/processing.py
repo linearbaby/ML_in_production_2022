@@ -44,7 +44,7 @@ def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame, eval=False) -
             (
                 "num",
                 process_numerical_features(),
-                dataset.select_dtypes(include=["int64", "float64"]).columns,
+                dataset.select_dtypes(include=["float64", "int64"]).columns,
             ),
             (
                 "cat",
@@ -57,7 +57,7 @@ def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame, eval=False) -
     # check if eval, then there is no target in dataset,
     # and not need to train test_split
     if not eval:
-        log.debug("preprocessing dataset, and splitting it for train")
+        log.info("preprocessing dataset, and splitting it for train")
         return train_test_split(
             preprocessor.fit_transform(dataset),
             target,
@@ -65,5 +65,5 @@ def preprocess_pipeline(config: DictConfig, dataset: pd.DataFrame, eval=False) -
             random_state=config.random_state,
         )
     else:
-        log.debug("preprocessing dataset for evaluation")
+        log.info("preprocessing dataset for evaluation")
         return preprocessor.fit_transform(dataset)
