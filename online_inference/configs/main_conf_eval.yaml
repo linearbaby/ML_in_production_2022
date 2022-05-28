@@ -1,0 +1,9 @@
+defaults:
+  - _self_
+  - pipeline: pipeline_conf
+  - override hydra/job_logging: dot_formatted
+
+core: 
+  random_state: 0
+  root_path: ???  # this variable will be instantiated in runtime with project dir full path
+

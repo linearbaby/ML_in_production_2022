@@ -1,0 +1,6 @@
+test_size: 0.2
+random_state: ${core.random_state}
+
+default_prediction_pipeline: ${core.root_path}/model_pickle/pipeline.pkl
+path_to_load_model: ./pipeline.pkl
+default_model_sha: 17eHTrsa2bX4tVt4Zle-erIE5qOYuE-a9
