@@ -7,9 +7,10 @@ RUN pip install -r requirements.txt
 COPY server.py server.py
 COPY ./model_pickle/pipeline.pkl ./model_pickle/pipeline.pkl
 COPY configs ./configs
+COPY delayed_run.sh delayed_run.sh 
 
 EXPOSE 8000
 WORKDIR .
 ENV MODEL_LOCATION=Google.disk
 
-ENTRYPOINT [ "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000" ]
+ENTRYPOINT [ "./delayed_run.sh" ]
