@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: online-inference
+  labels:
+    name: online-inference
+spec:
+  containers:
+    - name: online-inference
+      image: gotovtsev/ml_prod_2
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      ports:
+        - containerPort: 8000
